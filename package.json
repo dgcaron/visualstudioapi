@@ -1,0 +1,19 @@
+{
+  "name": "visualstudioapi",
+  "version": "0.0.1",
+  "description": "Visual Studio API",
+  "main": "vs-client.js",
+  "engines": {
+    "node": ">= 0.8.19"
+  },
+  "dependencies": {
+    "proxyquire": "~1.0.1",
+    "mocha": "~1.21.5",
+    "request": "~2.40.0"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "author": "Didier Caron",
+  "licenses": ["MIT"],
+  "keywords": []
+}

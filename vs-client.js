@@ -11,7 +11,7 @@ VisualStudio.Tokens = function (options) {
     this.redirectUrl = options.redirectUrl;
     this.tokenUrl = options.tokenUrl;
    
-    this.headers = { 'Content-Type': 'application/json' };
+    this.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
 
     this.createPayload = function (grant_type, assertion) {
         var data =  {
@@ -32,7 +32,7 @@ VisualStudio.Tokens.prototype.getToken = function (request) {
     httpRequest.post(
     {
         uri: this.tokenUrl,
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        headers: this.headers,
         form: this.createPayload("urn:ietf:params:oauth:grant-type:jwt-bearer", request.assertion)
     }, 
     function (error, response, body) {
@@ -54,9 +54,7 @@ VisualStudio.Tokens.prototype.renewToken = function (request) {
     var httpRequest = require('request');
     httpRequest.post({
         uri: this.tokenUrl,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
+        headers: this.headers,
         form: this.createPayload("refresh_token", request.assertion)
     }, 
     function (error, response, body) {
