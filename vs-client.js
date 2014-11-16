@@ -63,7 +63,7 @@ VisualStudio.Client = function (token) {
 
         var uri = URI.expand("https://{account}.visualstudio.com/defaultcollection/_apis/{section}", {
             account: account,
-            section: sections
+            section: section
         }).query(options);
         
         uri = URI.decodeQuery(uri);
