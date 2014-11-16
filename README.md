@@ -5,13 +5,16 @@ Simple node / javascript class for working with the tokens of the visual studio 
 This allows you to chain requests
 
 Single Promise
+'''
     var api = new vs.Client(token);
     api.getProfile().then(function (result) {
         var profile = result.data;
 	    // do something with the profile
     });
+'''
 
 Chained Promises
+'''
     var api = new vs.Client(token);
     api.getProfile().then(function (result) {
         var profile = result.data;
@@ -20,6 +23,7 @@ Chained Promises
         var accounts = result.data;
 		// do something with the accounts
     });
+'''
 
 
 Roadmap
