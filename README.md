@@ -4,7 +4,7 @@ visualstudioapi
 Simple node / javascript class for working with the tokens of the visual studio online api. The api uses RSVP to turn the requests into promises.
 This allows you to chain requests
 
-Single Promise
+### Single Promise
 
 ```javascript
     var api = new vs.Client(token);
@@ -14,7 +14,7 @@ Single Promise
     });
 ```
 
-Chained Promises
+### Chained Promises
 
 ```javascript
     var api = new vs.Client(token);
@@ -28,19 +28,20 @@ Chained Promises
 ```
 
 
-Roadmap
-===============
-Tokens (Done)
-Profile (Done)
-Accounts (Done)
-Projects (Done)
-Builds (In Progress)
-Project Collections 
-Teams
-Work Item Tracking
+### Roadmap
+Section | State
+--------------
+Tokens | Done
+Profile | Done
+Accounts | Done
+Projects | Done
+Builds 	| In Progress
+Project Collections | Pending
+Teams | Pending
+Work Item Tracking | Pending
+etc
 
-Third Party Libraries
-===============
+### Third Party Libraries
 RSVP
 URIjs
 request
