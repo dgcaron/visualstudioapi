@@ -7,7 +7,8 @@ This allows you to chain requests
 ### Single Promise
 
 ```javascript
-    var api = new vs.Client(token);
+    var visualstudio = require("visualstudio-client");
+    var api = new visualstudio.Client(token);
     api.getProfile().then(function (result) {
         var profile = result.data;
 	    // do something with the profile
@@ -17,7 +18,8 @@ This allows you to chain requests
 ### Chained Promises
 
 ```javascript
-    var api = new vs.Client(token);
+    var visualstudio = require("visualstudio-client");
+    var api = new visualstudio.Client(token);
     api.getProfile().then(function (result) {
         var profile = result.data;
         return api.getAccountsByOwner(profile.id);
@@ -27,8 +29,6 @@ This allows you to chain requests
     });
 ```
 
-
-### Roadmap
 | Section | State |
 --------------
 | Tokens | Done |
