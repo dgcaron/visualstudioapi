@@ -1,13 +1,17 @@
 ﻿// UnitTest.js 
 
 var assert = require('assert');
+var should = require('should');
 var proxyquire = require('proxyquire');
 
+
 var httpRequest = {};
-var vs = proxyquire('../vs-client.js',
-    {
-        'request': httpRequest
-    });
+
+function request( options, callback) { 
+    httpRequest.invoked(options, callback);
+}
+
+var vs = proxyquire('../vs-client.js', { 'request': request });
 
 var clientSettings = {
     "userId" : "userid",
@@ -47,12 +51,7 @@ describe('Visual Studio API', function () {
 
         // Arrange
         var api = new vs.Tokens(clientSettings);
-        config.appSettings = {
-            'vsclient_assertion_type': 'assertion_type',
-            'vsclient_assertion': 'clientid',
-            'vsredirect_uri': 'url'
-        }
-
+        
         httpRequest.post = function (options, callback) {
             console.log('intercepted post');
             callback(null, { statusCode: 200 }, "{\"expires_in\":899}");
@@ -69,12 +68,7 @@ describe('Visual Studio API', function () {
     it('getTokenReturnsErrorOnFailure', function () {
         // Arrange
         var api = new vs.Tokens(clientSettings);
-        config.appSettings = {
-            'vsclient_assertion_type': 'assertion_type',
-            'vsclient_assertion': 'clientid',
-            'vsredirect_uri': 'url'
-        }
-
+      
         httpRequest.post = function (options, callback) {
             console.log('intercepted post');
             callback(null, { statusCode: 404 }, "{\"expires_in\":899}");
@@ -92,12 +86,7 @@ describe('Visual Studio API', function () {
 
         // Arrange
         var api = new vs.Tokens(clientSettings);
-        config.appSettings = {
-            'vsclient_assertion_type': 'assertion_type',
-            'vsclient_assertion': 'clientid',
-            'vsredirect_uri': 'url'
-        }
-
+       
         httpRequest.post = function (options, callback) {
             console.log('intercepted post');
             callback("BAD request", { statusCode: 200 }, "{\"expires_in\":899}");
@@ -118,11 +107,6 @@ describe('Visual Studio API', function () {
         
         // Arrange
         var api = new vs.Tokens(clientSettings);
-        config.appSettings = {
-            'vsclient_assertion_type': 'assertion_type',
-            'vsclient_assertion': 'clientid',
-            'vsredirect_uri': 'url'
-        }
         
         httpRequest.post = function (options, callback) {
             console.log('intercepted post');
@@ -139,33 +123,53 @@ describe('Visual Studio API', function () {
             }
         });
     });
-
+    
+    it('renewTokenReturnsTokenOnSuccess', function () {
+        
+        // Arrange
+        var api = new vs.Tokens(clientSettings);
+        
+        httpRequest.post = function (options, callback) {
+            callback(null, { statusCode: 200 }, "{\"expires_in\":899}");
+        }
+        
+        return api.renewToken('assertion').then(function (token) {
+            token.should.have.property('expires_in');
+        });
+    });
 
     it('renewTokenReturnsBadRequestOnInnerError', function () {
         
         // Arrange
         var api = new vs.Tokens(clientSettings);
-        config.appSettings = {
-            'vsclient_assertion_type': 'assertion_type',
-            'vsclient_assertion': 'clientid',
-            'vsredirect_uri': 'url'
-        }
         
         httpRequest.post = function (options, callback) {
-            console.log('intercepted post');
-            callback("BAD request", { statusCode: 200 }, "{\"expires_in\":899}");
+            callback("BAD request", { statusCode: 200 }, "{'expires_in':899}");
         }
         
-        api.renewToken({
-            assertion: 'assertion',
-            succes: function (token) {
-                assert.ok(false, token);
-            },
-            error: function (statusCode, message) {
-                assert.equal(400, statusCode);
-            }
+       return api.renewToken('assertion').catch(function (error) { 
+            error.should.eql("BAD request");
+        });
+    });
+    
+   
+    it('getProfileReturnsProfile', function () {
+        
+        // Arrange
+        var client = new vs.Client('assertion');
+        
+        httpRequest.invoked = function (options, callback) {
+            callback(null, { statusCode: 200 }, "{\"name\":\"Didier Caron\"}");
+        }
+        
+        return client.getProfile().then(function (result) {
+            result.data.should.have.property('name');
         });
     });
 
-    
+    it('buildUrl', function () {
+        var client = new vs.Client('assertion');
+
+        client.buildUnscopedUrl('section', { $skip: 0 });
+    });
 })
