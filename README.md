@@ -29,16 +29,16 @@ This allows you to chain requests
 
 
 ### Roadmap
-Section | State
+| Section | State |
 --------------
-Tokens | Done
-Profile | Done
-Accounts | Done
-Projects | Done
-Builds 	| In Progress
-Project Collections | Pending
-Teams | Pending
-Work Item Tracking | Pending
+| Tokens | Done |
+| Profile | Done |
+| Accounts | Done |
+| Projects | Done |
+| Builds | In Progress
+| Project Collections | Pending
+| Teams | Pending
+| Work Item Tracking | Pending
 etc
 
 ### Third Party Libraries
