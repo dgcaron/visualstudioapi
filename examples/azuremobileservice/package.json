@@ -1,7 +1,7 @@
 {
-    "name": "buildmanager",
+    "name": "mobileservice-tokenexample",
     "version": "1.0.0",
-    "description": "buildmanager - hosted on Windows Azure Mobile Services",
+    "description": "token example - hosted on Windows Azure Mobile Services",
     "main": "server.js",
     "engines": {
         "node": ">= 0.8.19"
@@ -16,7 +16,7 @@
         "mobileservice-config": "~1.0.0"
     },
     "scripts": { },
-    "author": "unknown",
+    "author": "Didier Caron",
     "licenses": [ ],
     "keywords": [ ]
 }
