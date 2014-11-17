@@ -1,22 +1,27 @@
 {
-  "name": "visualstudioapi",
-  "version": "0.0.1",
-  "description": "Visual Studio API",
-  "main": "vs-client.js",
-  "engines": {
-    "node": ">= 0.8.19"
-  },
-  "dependencies": {
-    "proxyquire": "~1.0.1",
-    "mocha": "~1.21.5",
-    "request": "~2.40.0",
-    "rsvp": "~3.0.14",
-    "URIjs": "~1.14.1",
-    "should": "~3.3.2"
-  },
-  "devDependencies": {},
-  "scripts": {},
-  "author": "Didier Caron",
-  "licenses": ["MIT"],
-  "keywords": []
+    "name": "visualstudio-client",
+    "version": "0.0.1",
+    "description": "A client for the Visual Studio Online API",
+    "main": "vs-client.js",
+    "engines": {
+        "node": ">= 0.8.19"
+    },
+    "dependencies": {
+        "request": "~2.40.0",
+        "rsvp": "~3.0.14",
+        "URIjs": "~1.14.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/dgcaron/visualstudioapi.git"
+    },
+    "devDependencies": { 
+        "proxyquire": "~1.0.1",
+        "mocha": "~1.21.5",
+        "should": "~3.3.2"
+    },
+    "scripts": { },
+    "author": "Didier Caron",
+    "licenses": [ "MIT" ],
+    "keywords": [ "REST", "Visual Studio Online", "Promise" ]
 }

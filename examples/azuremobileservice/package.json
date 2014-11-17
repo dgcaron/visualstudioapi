@@ -1,0 +1,22 @@
+{
+    "name": "buildmanager",
+    "version": "1.0.0",
+    "description": "buildmanager - hosted on Windows Azure Mobile Services",
+    "main": "server.js",
+    "engines": {
+        "node": ">= 0.8.19"
+    },
+    "dependencies": {
+        "request": "~2.40.0",
+        "visualstudio-client": "~0.0.1"
+    },
+    "devDependencies": {
+        "proxyquire": "~1.0.1",
+        "mocha": "~1.21.4",
+        "mobileservice-config": "~1.0.0"
+    },
+    "scripts": { },
+    "author": "unknown",
+    "licenses": [ ],
+    "keywords": [ ]
+}

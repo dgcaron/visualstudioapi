@@ -32,12 +32,51 @@ VisualStudio.Tokens = function (options) {
     };
 };
 
+VisualStudio.Tokens.prototype.callService = function (method, uri, data) {
+    
+    var self = this;
+    return new RSVP.Promise(function (resolve, reject) {
+        var request = require('request');
+        request({
+            method: method,
+            uri: uri,
+            headers: self.headers,
+            form: data
+        },
+         function (error, response, body) {
+            var result = {
+                statusCode: response.statusCode,
+                data : null,
+                error: error
+            };
+            
+            if (!error && response.statusCode == 200) {
+                result.data = JSON.parse(body);
+                resolve(result);
+            }
+            else {
+                reject(result);
+            }
+        });
+    });
+}
+
+VisualStudio.Tokens.prototype.getToken = function (assertion) {
+    var data = this.createPayload("urn:ietf:params:oauth:grant-type:jwt-bearer", assertion);
+    return this.callService("POST", this.tokenUrl, data);
+ };
+
+VisualStudio.Tokens.prototype.renewToken = function (assertion) {
+    var data = this.createPayload("refresh_token", assertion);
+    return this.callService("POST", this.tokenUrl, data);
+};
+
 VisualStudio.Client = function (token) {
     
     this.token = token;
     this.baseUrl = "https://app.vssps.visualstudio.com/";
     this.accountBaseUrl = "https://{account}.visualstudio.com/defaultcollection/_apis/{section}";
-      
+    
     this.headers = {
         'Content-Type': 'application/json',
         'Authorization': 'bearer ' + this.token.access_token
@@ -45,9 +84,9 @@ VisualStudio.Client = function (token) {
     
     this.buildUnscopedUrl = function (section, options) {
         
-        options = options || { };
+        options = options || {};
         options['api-version'] = VisualStudio.Version;
-
+        
         var uri = URI.expand("https://app.vssps.visualstudio.com/_apis/{section}", {
             section: section
         }).query(options);
@@ -56,11 +95,11 @@ VisualStudio.Client = function (token) {
         
         return uri.toString();
     }
-
-    this.buildScopedUrl = function (account, section, options)  {
+    
+    this.buildScopedUrl = function (account, section, options) {
         options = options || {};
         options['api-version'] = VisualStudio.Version;
-
+        
         var uri = URI.expand("https://{account}.visualstudio.com/defaultcollection/_apis/{section}", {
             account: account,
             section: section
@@ -70,48 +109,6 @@ VisualStudio.Client = function (token) {
         
         return uri.toString();
     }
-};
-
-VisualStudio.Tokens.prototype.getToken = function (request) {
-    var httpRequest = require('request');
-    
-    var self = this;
-    return new RSVP.Promise(function (resolve, reject) {
-        httpRequest.post(
-        {
-            uri: this.tokenUrl,
-            headers: this.headers,
-            form: this.createPayload("urn:ietf:params:oauth:grant-type:jwt-bearer", request.assertion)
-        }, 
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                resolve(JSON.parse(body));
-            }
-            else {
-                reject(error);
-            }
-        });
-    });
-};
-
-VisualStudio.Tokens.prototype.renewToken = function (assertion) {
-    var httpRequest = require('request');
-    var self = this;
-    return new RSVP.Promise(function (resolve, reject) {
-        httpRequest.post({
-            uri: self.tokenUrl,
-            headers: self.headers,
-            form: self.createPayload("refresh_token", assertion)
-        }, 
-        function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                resolve(JSON.parse(body));
-            }
-            else {
-                reject(error);
-            }
-        });
-    });
 };
 
 VisualStudio.Client.prototype.callService = function (method, uri, data) {

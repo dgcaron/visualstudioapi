@@ -170,6 +170,7 @@ describe('Visual Studio API', function () {
     it('buildUrl', function () {
         var client = new vs.Client('assertion');
 
-        client.buildUnscopedUrl('section', { $skip: 0 });
+        var uri = client.buildUnscopedUrl('section', { $skip: 0 });
+        assert.ok(uri, "");
     });
 })
