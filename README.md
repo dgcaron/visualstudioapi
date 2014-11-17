@@ -1,7 +1,7 @@
 visualstudioapi
 ===============
 
-Simple node / javascript class for working with the tokens of the visual studio online api. The api uses RSVP to turn the requests into promises.
+Simple node / javascript class for working with the visual studio online api. The api uses RSVP to turn the requests into promises.
 This allows you to chain requests
 
 ### Install
