@@ -173,4 +173,72 @@ describe('Visual Studio API', function () {
         var uri = client.buildUnscopedUrl('section', { $skip: 0 });
         assert.ok(uri, "");
     });
-})
+});
+
+
+describe('Builds', function () {
+    
+    it('getBuild', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/builds/1?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuild('account', 'project',1);
+    });
+    
+    it('getBuildDetail', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/builds/1/details?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuildDetail('account', 'project',1);
+    });
+
+    it('getBuilds', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/builds?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuilds('account', 'project');
+
+
+    });
+
+    it('getBuildDefinition', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/definitions/1?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuildDefinition('account', 'project', 1);
+
+
+    });
+
+    it('getBuildDefinitions', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/definitions?api-version=1.0';
+        var api = new vs.Client({access_token:'token'});
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+
+        return api.getBuildDefinitions('account', 'project');
+    });
+});

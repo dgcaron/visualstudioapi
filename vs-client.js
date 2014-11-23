@@ -109,6 +109,21 @@ VisualStudio.Client = function (token) {
         
         return uri.toString();
     }
+
+    this.buildProjectScopedUrl = function (account, project, section, options) {
+        options = options || {};
+        options['api-version'] = VisualStudio.Version;
+        
+        var uri = URI.expand("https://{account}.visualstudio.com/defaultcollection/{project}/_apis/{section}", {
+            account: account,
+            project: project,
+            section: section
+        }).query(options);
+        
+        uri = URI.decodeQuery(uri);
+        
+        return uri.toString();
+    }
 };
 
 VisualStudio.Client.prototype.callService = function (method, uri, data) {
@@ -159,10 +174,38 @@ VisualStudio.Client.prototype.getProjects = function (account, options) {
     return this.callService("GET", uri);
 };
 
-VisualStudio.Client.prototype.getProject = function (account,project, options) {
+VisualStudio.Client.prototype.getProject = function (account, project, options) {
     var uri = this.buildScopedUrl(account, 'projects/'+ project, options);
     return this.callService("GET", uri);
 };
+
+// BUILDS
+VisualStudio.Client.prototype.getBuild = function (account, project, buildId, options) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/builds/'+buildId , options);
+    return this.callService("GET", uri);
+};
+
+VisualStudio.Client.prototype.getBuildDetail = function (account, project, buildId, options) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/builds/' + buildId + '/details' , options);
+    return this.callService("GET", uri);
+};
+
+VisualStudio.Client.prototype.getBuilds = function (account, project, options) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/builds' , options);
+    return this.callService("GET", uri);
+};
+
+VisualStudio.Client.prototype.getBuildDefinition = function (account, project, build, options) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/definitions/' + build , options);
+    return this.callService("GET", uri);
+};
+
+
+VisualStudio.Client.prototype.getBuildDefinitions = function (account, project, options) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/definitions' , options);
+    return this.callService("GET", uri);
+};
+
 
 exports.Client = VisualStudio.Client;
 exports.Tokens = VisualStudio.Tokens;
