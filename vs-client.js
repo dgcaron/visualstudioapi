@@ -200,12 +200,31 @@ VisualStudio.Client.prototype.getBuildDefinition = function (account, project, b
     return this.callService("GET", uri);
 };
 
-
 VisualStudio.Client.prototype.getBuildDefinitions = function (account, project, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/definitions' , options);
     return this.callService("GET", uri);
 };
 
+
+VisualStudio.Client.prototype.getBuildQueue = function (account, project, queue) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/queues/' + queue);
+    return this.callService("GET", uri);
+};
+
+VisualStudio.Client.prototype.getBuildQueues = function (account, project) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/queues');
+    return this.callService("GET", uri);
+};
+
+VisualStudio.Client.prototype.getBuildRequests = function (account, project) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/requests');
+    return this.callService("GET", uri);
+};
+
+VisualStudio.Client.prototype.getBuildQualities = function (account, project) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/qualities');
+    return this.callService("GET", uri);
+};
 
 exports.Client = VisualStudio.Client;
 exports.Tokens = VisualStudio.Tokens;

@@ -212,8 +212,6 @@ describe('Builds', function () {
         }
         
         return api.getBuilds('account', 'project');
-
-
     });
 
     it('getBuildDefinition', function () {
@@ -226,8 +224,6 @@ describe('Builds', function () {
         }
         
         return api.getBuildDefinition('account', 'project', 1);
-
-
     });
 
     it('getBuildDefinitions', function () {
@@ -240,5 +236,53 @@ describe('Builds', function () {
         }
 
         return api.getBuildDefinitions('account', 'project');
+    });
+
+    it('getBuildQueue', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/queues/1?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuildQueue('account', 'project', 1);
+    });
+    
+    it('getBuildQueues', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/queues?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuildQueues('account', 'project');
+    });
+    
+    it('getBuildQualities', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/qualities?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuildQualities('account', 'project');
+    });
+
+    it('getBuildRequests', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/requests?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getBuildRequests('account', 'project');
     });
 });
