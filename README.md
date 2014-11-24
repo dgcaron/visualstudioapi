@@ -43,10 +43,10 @@ npm install visualstudio-client
 | Profile | Done |
 | Accounts | Done |
 | Projects | Done |
-| Builds | In Progress|
+| Builds | Done|
+| Work Item Tracking | Pending|
 | Project Collections | Pending|
 | Teams | Pending|
-| Work Item Tracking | Pending|
 
 etc
 
