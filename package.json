@@ -1,6 +1,6 @@
 {
     "name": "visualstudio-client",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A client for the Visual Studio Online API",
     "main": "vs-client.js",
     "engines": {
