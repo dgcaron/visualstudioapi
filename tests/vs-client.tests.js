@@ -273,6 +273,34 @@ describe('Builds', function () {
         
         return api.getBuildQualities('account', 'project');
     });
+    
+    it('addBuildQuality', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/qualities/new-quality?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.method.should.equal('PUT');
+            options.uri.should.equal(uri);
+            
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.addBuildQuality('account', 'project','new-quality');
+    });
+    
+    it('deleteBuildQuality', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/qualities/new-quality?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.method.should.equal('DELETE');
+            options.uri.should.equal(uri);
+            
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.deleteBuildQuality('account', 'project', 'new-quality');
+    });
 
     it('getBuildRequests', function () {
         var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/requests?api-version=1.0';

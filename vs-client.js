@@ -156,75 +156,87 @@ VisualStudio.Client.prototype.callService = function (method, uri, data) {
 
 VisualStudio.Client.prototype.getProfile = function () {
     var uri = this.buildUnscopedUrl('profile/profiles/me');
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getAccountsByMember = function (memberId) {
     var uri = this.buildUnscopedUrl('Accounts', { memberId : memberId });
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getAccountsByOwner = function (ownerId) {
     var uri = this.buildUnscopedUrl('Accounts', {ownerId : ownerId});
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getProjects = function (account, options) {
     var uri = this.buildScopedUrl(account, 'projects', options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getProject = function (account, project, options) {
     var uri = this.buildScopedUrl(account, 'projects/'+ project, options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 // BUILDS
 VisualStudio.Client.prototype.getBuild = function (account, project, buildId, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/builds/'+buildId , options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuildDetail = function (account, project, buildId, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/builds/' + buildId + '/details' , options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuilds = function (account, project, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/builds' , options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuildDefinition = function (account, project, build, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/definitions/' + build , options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuildDefinitions = function (account, project, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/definitions' , options);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 
 VisualStudio.Client.prototype.getBuildQueue = function (account, project, queue) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/queues/' + queue);
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuildQueues = function (account, project) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/queues');
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuildRequests = function (account, project) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/requests');
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
 
 VisualStudio.Client.prototype.getBuildQualities = function (account, project) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/qualities');
-    return this.callService("GET", uri);
+    return this.callService('GET', uri);
 };
+
+VisualStudio.Client.prototype.addBuildQuality = function (account, project,quality) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/qualities/'+ quality);
+    return this.callService('PUT', uri);
+};
+
+VisualStudio.Client.prototype.deleteBuildQuality = function (account, project, quality) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/qualities/' + quality);
+    return this.callService('DELETE', uri);
+};
+
+
 
 exports.Client = VisualStudio.Client;
 exports.Tokens = VisualStudio.Tokens;
