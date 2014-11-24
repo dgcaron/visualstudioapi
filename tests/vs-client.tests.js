@@ -213,6 +213,45 @@ describe('Builds', function () {
         
         return api.getBuilds('account', 'project');
     });
+    
+    it('addBuild', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/requests?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.method.should.equal('POST');
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.addBuild('account', 'project', {});
+    });
+    
+    it('updateBuild', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/requests/1?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.method.should.equal('PATCH');
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.updateBuild('account', 'project', 1, {});
+    });
+    
+    it('cancelBuild', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/requests/1?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.method.should.equal('DELETE');
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.cancelBuild('account', 'project', 1);
+    });
 
     it('getBuildDefinition', function () {
         var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/build/definitions/1?api-version=1.0';

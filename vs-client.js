@@ -180,6 +180,11 @@ VisualStudio.Client.prototype.getProject = function (account, project, options) 
 };
 
 // BUILDS
+VisualStudio.Client.prototype.getBuilds = function (account, project, options) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/builds' , options);
+    return this.callService('GET', uri);
+};
+
 VisualStudio.Client.prototype.getBuild = function (account, project, buildId, options) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/builds/'+buildId , options);
     return this.callService('GET', uri);
@@ -190,9 +195,19 @@ VisualStudio.Client.prototype.getBuildDetail = function (account, project, build
     return this.callService('GET', uri);
 };
 
-VisualStudio.Client.prototype.getBuilds = function (account, project, options) {
-    var uri = this.buildProjectScopedUrl(account, project, 'build/builds' , options);
-    return this.callService('GET', uri);
+VisualStudio.Client.prototype.addBuild = function (account, project, build) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/requests');
+    return this.callService('POST', uri, build);
+};
+
+VisualStudio.Client.prototype.updateBuild = function (account, project, request, status) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/requests/' + request);
+    return this.callService('PATCH', uri, status);
+};
+
+VisualStudio.Client.prototype.cancelBuild = function (account, project, request, status) {
+    var uri = this.buildProjectScopedUrl(account, project, 'build/requests/' + request);
+    return this.callService('DELETE', uri);
 };
 
 VisualStudio.Client.prototype.getBuildDefinition = function (account, project, build, options) {
@@ -201,10 +216,9 @@ VisualStudio.Client.prototype.getBuildDefinition = function (account, project, b
 };
 
 VisualStudio.Client.prototype.getBuildDefinitions = function (account, project, options) {
-    var uri = this.buildProjectScopedUrl(account, project, 'build/definitions' , options);
+    var uri = this.buildProjectScopedUrl(account, project, 'build/definitions', options);
     return this.callService('GET', uri);
 };
-
 
 VisualStudio.Client.prototype.getBuildQueue = function (account, project, queue) {
     var uri = this.buildProjectScopedUrl(account, project, 'build/queues/' + queue);
