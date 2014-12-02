@@ -353,3 +353,18 @@ describe('Builds', function () {
         return api.getBuildRequests('account', 'project');
     });
 });
+
+describe('Work Items', function () {
+    
+    it('getWorkItem', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/_apis/wit/workitems/1?$expand=all&api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getWorkItem('account', 1, { $expand: 'all' });
+    });
+});

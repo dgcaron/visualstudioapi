@@ -250,6 +250,11 @@ VisualStudio.Client.prototype.deleteBuildQuality = function (account, project, q
     return this.callService('DELETE', uri);
 };
 
+// WORK ITEMS
+VisualStudio.Client.prototype.getWorkItem = function (account, workitem,options) {
+    var uri = this.buildScopedUrl(account, 'wit/workitems/'+workitem,options);
+    return this.callService('GET', uri);
+};
 
 
 exports.Client = VisualStudio.Client;
