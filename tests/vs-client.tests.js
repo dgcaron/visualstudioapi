@@ -367,4 +367,28 @@ describe('Work Items', function () {
         
         return api.getWorkItem('account', 1, { $expand: 'all' });
     });
+
+    it('getWorkItemDefaults', function () {
+        var uri = 'https://account.visualstudio.com/defaultcollection/project/_apis/wit/workitems/$Task?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getWorkItemDefaults('account', 'project', 'Task');
+    });
+
+    it('createWorkItem', function () {
+        var uri = 'https://account.visualstudio.com/DefaultCollection/project/_apis/wit/workitems/$Task?api-version=1.0';
+        var api = new vs.Client({ access_token: 'token' });
+        
+        httpRequest.invoked = function (options, callback) {
+            options.uri.should.equal(uri);
+            callback(null, { statusCode: 200 }, null);
+        }
+        
+        return api.getWorkItemDefaults('account', 'project', 'Task');
+    });
 });

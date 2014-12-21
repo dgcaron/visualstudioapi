@@ -251,11 +251,44 @@ VisualStudio.Client.prototype.deleteBuildQuality = function (account, project, q
 };
 
 // WORK ITEMS
-VisualStudio.Client.prototype.getWorkItem = function (account, workitem,options) {
+
+
+VisualStudio.Client.prototype.getWorkItem = function (account, workitem, options) {
     var uri = this.buildScopedUrl(account, 'wit/workitems/'+workitem,options);
     return this.callService('GET', uri);
 };
 
+VisualStudio.Client.prototype.getWorkItemDefaults = function (account,project, workItemTypeName) {
+    var uri = this.buildProjectScopedUrl(account, project, 'wit/workitems/$' + workItemTypeName);
+    return this.callService('GET', uri);
+};
+
+VisualStudio.Client.prototype.workItemField = function (op, path, value) {
+    var field = {};
+    
+    field['op'] = op;
+    field['path'] = path;
+    field['value'] = value;
+    
+    return field;
+}
+
+VisualStudio.Client.prototype.workItemRelation = function (op, path, value, url, attributes) {
+    var field = {};
+    
+    field['op'] = op;
+    field['path'] = path;
+    field['value.rel'] = value;
+    field['value.url'] = url;
+    field['value.attributes'] = attributes;
+    
+    return field;
+}
+
+VisualStudio.Client.prototype.createWorkItem = function (account, project, workItemTypeName, data) {
+    var uri = this.buildProjectScopedUrl(account, project, 'wit/workitems/$' + workItemTypeName);
+    return this.callService('PATCH', uri, data);
+};
 
 exports.Client = VisualStudio.Client;
 exports.Tokens = VisualStudio.Tokens;
