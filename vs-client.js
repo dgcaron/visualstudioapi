@@ -4,13 +4,13 @@
         // Node. Does not work with strict CommonJS, but 
         // only CommonJS-like environments that support module.exports, 
         // like Node. 
-        module.exports.Client = factory(require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate')).Client;
-        module.exports.Tokens = factory(require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate')).Tokens;
+        module.exports.Client = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate')).Client;
+        module.exports.Tokens = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate')).Tokens;
     } else {
         // Browser globals (root is window) 
-        root.VisualStudio = factory(root.RSVP, root.URI, root.URITemplate);
+        root.VisualStudio = factory(root.request, root.RSVP, root.URI, root.URITemplate);
     }
-}(this, function (RSVP, URI, URITemplate) {
+}(this, function (request, RSVP, URI, URITemplate) {
     //use b in some fashion. 
     
     // Just return a value to define the module export. 
@@ -60,7 +60,6 @@
         
         var self = this;
         return new RSVP.Promise(function (resolve, reject) {
-            var request = require('request');
             request({
                 method: method,
                 uri: uri,
@@ -154,8 +153,7 @@
         
         var self = this;
         return new RSVP.Promise(function (resolve, reject) {
-            var request = require('request');
-            request({
+           request({
                 method: method,
                 uri: uri,
                 headers: self.headers
