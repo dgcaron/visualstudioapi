@@ -23,7 +23,7 @@
         "tests"
     ],
     "dependencies": {
-        "request": "~2.40.0",
+        "jquery": "~1.11.1",
         "rsvp": "~3.0.14",
         "uri.js": "~1.14.1"
     }
