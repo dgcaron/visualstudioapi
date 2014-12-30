@@ -4,14 +4,16 @@
         // Node. Does not work with strict CommonJS, but 
         // only CommonJS-like environments that support module.exports, 
         // like Node. 
-        module.exports.Client = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate')).Client;
-        module.exports.Tokens = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate')).Tokens;
+        module.exports.Client = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate', 'node')).Client;
+        module.exports.Tokens = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate'.'node')).Tokens;
     } else {
         // Browser globals (root is window) 
-        root.VisualStudio = factory(root.request, root.RSVP, root.URI, root.URITemplate);
+        root.VisualStudio = factory($.ajax, root.RSVP, root.URI, root.URITemplate, 'browser');
     }
-}(this, function (request, RSVP, URI, URITemplate) {
+}(this, function (request, RSVP, URI, URITemplate, mode) {
     //use b in some fashion. 
+    
+    console.log(request);
     
     // Just return a value to define the module export. 
     // This example returns an object, but the module 
@@ -152,28 +154,60 @@
     VisualStudio.Client.prototype.callService = function (method, uri, data) {
         
         var self = this;
-        return new RSVP.Promise(function (resolve, reject) {
-           request({
-                method: method,
-                uri: uri,
-                headers: self.headers
-            },
+        
+        if (mode == 'node') {
+            return new RSVP.Promise(function (resolve, reject) {
+                request({
+                    method: method,
+                    uri: uri,
+                    headers: self.headers,
+                    form: data
+                },
          function (error, response, body) {
-                var result = {
-                    statusCode: response.statusCode,
-                    data : null,
-                    error: error
-                };
-                
-                if (!error && response.statusCode == 200) {
-                    result.data = JSON.parse(body);
-                    resolve(result);
-                }
-                else {
-                    reject(result);
-                }
+                    var result = {
+                        statusCode: response.statusCode,
+                        data : null,
+                        error: error
+                    };
+                    
+                    if (!error && response.statusCode == 200) {
+                        result.data = JSON.parse(body);
+                        resolve(result);
+                    }
+                    else {
+                        reject(result);
+                    }
+                });
             });
-        });
+        }
+        
+        if (mode == 'browser') { 
+            return new RSVP.Promise(function (resolve, reject) {
+                request({
+                    type : method,
+                    url: uri,
+                    headers: self.headers,
+                    data: data
+                }).then(function (data, statusCode, jqXHR) {
+                    var result = {
+                        statusCode: statusCode,
+                        data : JSON.parse(data),
+                        error: error
+                    };
+                    
+                    resolve(result);
+                    
+                }, function (jqXHR, statusCode, error) {
+                    var result = {
+                        statusCode: statusCode,
+                        data : null,
+                        error: error
+                    };
+                    
+                    reject(result);
+                });
+                    
+            });
     }
     
     VisualStudio.Client.prototype.getProfile = function () {
