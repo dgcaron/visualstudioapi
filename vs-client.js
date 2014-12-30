@@ -11,6 +11,8 @@ var URITemplate = require('URIjs/src/URITemplate');
 
 VisualStudio.Version = "1.0";
 
+
+
 VisualStudio.Tokens = function (options) {
     
     this.clientId = options.clientId;
@@ -31,6 +33,20 @@ VisualStudio.Tokens = function (options) {
         return data;
     };
 };
+
+
+VisualStudio.Tokens.prototype.getAuthorizeUrl = function (applicationId,state,scope,callback) {
+  var base = 'https://app.vssps.visualstudio.com/oauth2/authorize';
+  var options = {
+        client_id: applicationId,
+        response_type: 'Assertion',
+        state: state,
+        scope: scope,
+        redirect_uri: callback
+    }
+    var uri = URI.expand(base).query(options);
+    return uri.toString();
+}
 
 VisualStudio.Tokens.prototype.callService = function (method, uri, data) {
     
