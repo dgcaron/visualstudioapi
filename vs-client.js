@@ -28,7 +28,7 @@
         this.clientId = options.clientId;
         this.redirectUrl = options.redirectUrl;
         this.tokenUrl = options.tokenUrl;
-        
+        this.scope = options.scope;
         this.headers = { 'Content-Type': 'application/x-www-form-urlencoded' };
         
         this.createPayload = function (grant_type, assertion) {
@@ -45,13 +45,13 @@
     };
     
     
-    VisualStudio.Tokens.prototype.getAuthorizeUrl = function (state, scope) {
+    VisualStudio.Tokens.prototype.getAuthorizeUrl = function (state) {
         var base = 'https://app.vssps.visualstudio.com/oauth2/authorize';
         var options = {
             client_id: this.clientId,
             response_type: 'Assertion',
             state: state,
-            scope: scope,
+            scope: this.scope,
             redirect_uri: this.redirectUrl
         }
         var uri = URI.expand(base).query(options);
