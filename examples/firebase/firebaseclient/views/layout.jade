@@ -1,0 +1,18 @@
+doctype html
+html(ng-app=app)
+  head
+    title= title
+    
+    block head
+   
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.css')
+    script(src=' https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.3.0/codemirror.js')
+
+    link(rel='stylesheet', href='https://cdn.firebase.com/libs/firepad/1.1.0/firepad.css')
+    script(src='https://cdn.firebase.com/libs/firepad/1.1.0/firepad.min.js')
+    
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body(ng-controller=controller)
+    block content
+
+    block bottom-scripts

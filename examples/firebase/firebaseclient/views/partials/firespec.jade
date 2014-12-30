@@ -1,0 +1,11 @@
+﻿div(id='firepad')= firepad
+
+script.
+  var firepadRef = new Firebase('https://sweltering-heat-5515.firebaseio.com/firepads/-JdmPrw6sIHdye2NR5-x');
+  var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
+  var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, { richTextShortcuts: true, richTextToolbar: true, defaultText: 'Hello, World!' });
+  
+vsoform(ng-model='groups')
+pre {{ vso | json }}
+pre {{ dynamicform | json }}
+

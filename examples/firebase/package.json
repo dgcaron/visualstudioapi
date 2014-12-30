@@ -1,0 +1,23 @@
+{
+  "name": "firebase-multiuseredit",
+  "version": "1.0.0",
+  "description": "Multi user edit based on firebase",
+  "main": "server.js",
+  "engines": {
+    "node": ">= 0.8.19"
+  },
+  "dependencies": {
+    "request": "~2.40.0",
+    "visualstudio-client": "~0.0.1",
+    "firebase": "~2.0.6",
+    "express": "~4.10.6"
+  },
+  "devDependencies": {
+    "proxyquire": "~1.0.1",
+    "mocha": "~1.21.4"
+  },
+  "scripts": {},
+  "author": "Didier Caron",
+  "licenses": [],
+  "keywords": []
+}
