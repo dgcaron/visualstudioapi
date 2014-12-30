@@ -1,0 +1,30 @@
+{
+    "name": "visualstudio-client",
+    "version": "0.0.3",
+    "homepage": "https://github.com/dgcaron/visualstudioapi",
+    "authors": [
+        "dgcaron <didier.caron@zeroandone.nl>"
+    ],
+    "description": "client for working with the visual studio online rest api",
+    "main": "vs-client.js",
+    "keywords": [
+        "visual",
+        "studio",
+        "online",
+        "rest",
+        "promises"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "request": "~2.40.0",
+        "rsvp": "~3.0.14",
+        "uri.js": "~1.14.1"
+    }
+}
