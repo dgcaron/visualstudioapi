@@ -5,7 +5,7 @@
         // only CommonJS-like environments that support module.exports, 
         // like Node. 
         module.exports.Client = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate', 'node')).Client;
-        module.exports.Tokens = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate'.'node')).Tokens;
+        module.exports.Tokens = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate', 'node')).Tokens;
     } else {
         // Browser globals (root is window) 
         root.VisualStudio = factory($.ajax, root.RSVP, root.URI, root.URITemplate, 'browser');
@@ -181,7 +181,7 @@
             });
         }
         
-        if (mode == 'browser') { 
+        if (mode == 'browser') {
             return new RSVP.Promise(function (resolve, reject) {
                 request({
                     type : method,
@@ -208,6 +208,7 @@
                 });
                     
             });
+        }
     }
     
     VisualStudio.Client.prototype.getProfile = function () {
