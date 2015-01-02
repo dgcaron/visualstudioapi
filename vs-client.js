@@ -61,29 +61,60 @@
     VisualStudio.Tokens.prototype.callService = function (method, uri, data) {
         
         var self = this;
-        return new RSVP.Promise(function (resolve, reject) {
-            request({
-                method: method,
-                uri: uri,
-                headers: self.headers,
-                form: data
-            },
+        if (mode == 'node') {
+            return new RSVP.Promise(function (resolve, reject) {
+                request({
+                    method: method,
+                    uri: uri,
+                    headers: self.headers,
+                    form: data
+                },
          function (error, response, body) {
-                var result = {
-                    statusCode: response.statusCode,
-                    data : null,
-                    error: error
-                };
-                
-                if (!error && response.statusCode == 200) {
-                    result.data = JSON.parse(body);
-                    resolve(result);
-                }
-                else {
-                    reject(result);
-                }
+                    var result = {
+                        statusCode: response.statusCode,
+                        data : null,
+                        error: error
+                    };
+                    
+                    if (!error && response.statusCode == 200) {
+                        result.data = JSON.parse(body);
+                        resolve(result);
+                    }
+                    else {
+                        reject(result);
+                    }
+                });
             });
-        });
+        }
+        
+        if (mode == 'browser') {
+            return new RSVP.Promise(function (resolve, reject) {
+                request({
+                    type : method,
+                    url: uri,
+                    headers: self.headers,
+                    data: data
+                }).then(function (data, statusCode, jqXHR) {
+                    var result = {
+                        statusCode: statusCode,
+                        data : JSON.parse(data),
+                        error: error
+                    };
+                    
+                    resolve(result);
+                    
+                }, function (jqXHR, statusCode, error) {
+                    var result = {
+                        statusCode: statusCode,
+                        data : null,
+                        error: error
+                    };
+                    
+                    reject(result);
+                });
+                    
+            });
+        }
     }
     
     VisualStudio.Tokens.prototype.getToken = function (assertion) {
@@ -154,7 +185,6 @@
     VisualStudio.Client.prototype.callService = function (method, uri, data) {
         
         var self = this;
-        
         if (mode == 'node') {
             return new RSVP.Promise(function (resolve, reject) {
                 request({
