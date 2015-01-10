@@ -6,8 +6,10 @@
         // like Node. 
         module.exports.Client = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate', 'node')).Client;
         module.exports.Tokens = factory(require('request'), require('rsvp'), require('URIjs'), require('URIjs/src/URITemplate', 'node')).Tokens;
-    } else {
+    }
+    else {
         // Browser globals (root is window) 
+        root.VisualStudioFactory = factory;
         root.VisualStudio = factory($.ajax, root.RSVP, root.URI, root.URITemplate, 'browser');
     }
 }(this, function (request, RSVP, URI, URITemplate, mode) {
@@ -93,7 +95,12 @@
                     type : method,
                     url: uri,
                     headers: self.headers,
-                    data: data
+                    data: data,
+                    dataType: 'jsonp',
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true
                 }).then(function (data, statusCode, jqXHR) {
                     var result = {
                         statusCode: statusCode,
